@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{shared/layout}">
+<head>
+    <title>Shto Produkt</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <h2>Shto Produkt të Ri</h2>
+
+    <form th:action="@{/admin/products/add}" th:object="${product}" method="post">
+
+        <div class="mb-3">
+            <label>Emri i Produktit:</label>
+            <input type="text" th:field="*{name}" class="form-control" />
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></p>
+        </div>
+
+        <div class="mb-3">
+            <label>Çmimi (€):</label>
+            <input type="number" step="0.01" th:field="*{price}" class="form-control" />
+            <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></p>
+        </div>
+
+        <div class="mb-3">
+            <label>Stoku (Sasia):</label>
+            <input type="number" th:field="*{stock}" class="form-control" />
+            <p th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}" class="text-danger"></p>
+        </div>
+
+        <div class="mb-3">
+            <label>Kategoria:</label>
+            <select th:field="*{category}" class="form-select">
+                <option value="">-- Zgjidh Kategorinë --</option>
+                <option th:each="c : ${categories}"
+                        th:value="${c.id}"
+                        th:text="${c.name}">
+                </option>
+            </select>
+            <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}" class="text-danger"></p>
+        </div>
+
+        <button type="submit" class="btn btn-success">Ruaj Produktin</button>
+        <a th:href="@{/app/products}" class="btn btn-secondary">Anulo</a>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Categories</title>
+</head>
+<body>
+
+<h2>Categories</h2>
+
+<a th:href="@{/categories/add}">Add Category</a>
+
+<ul>
+  <li th:each="c : ${categories}">
+    <span th:text="${c.name}"></span>
+  </li>
+</ul>
+
+<form th:action="@{/categories/delete/{id}(id=${c.id})}"
+      method="post"
+      style="display:inline">
+
+  <button type="submit">Delete</button>
+</form>
+
+
+</body>
+</html>
