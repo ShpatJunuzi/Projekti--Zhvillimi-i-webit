@@ -14,13 +14,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/css/**", "/js/**").permitAll() // Lejohet për të gjithë [cite: 20]
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // Vetëm ADMIN [cite: 27]
-                        .requestMatchers("/app/**").hasAnyRole("USER", "ADMIN") // USER & ADMIN [cite: 28]
+                        .requestMatchers("/login", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/app/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login") // Custom Login Page [cite: 20]
+                        .loginPage("/login")
                         .defaultSuccessUrl("/app/products", true)
                         .permitAll()
                 )
@@ -30,7 +30,7 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .exceptionHandling(ex -> ex
-                        .accessDeniedPage("/access-denied") // Custom Access Denied [cite: 29]
+                        .accessDeniedPage("/access-denied")
                 );
 
         return http.build();
