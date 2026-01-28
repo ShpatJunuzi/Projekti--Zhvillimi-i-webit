@@ -52,7 +52,7 @@ public class ProductController {
             Model model
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("categories", categoryService.findAll()); // Riafsho kategorite nese ka error
+            model.addAttribute("categories", categoryService.findAll());
             return "product/add";
         }
         service.save(product);

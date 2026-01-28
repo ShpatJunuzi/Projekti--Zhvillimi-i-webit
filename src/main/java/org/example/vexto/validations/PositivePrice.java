@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = PositivePriceValidator.class)
 public @interface PositivePrice {
-    String message() default "Çmimi duhet të jetë më i madh se zero!"; // Mesazhi në UI [cite: 48]
+    String message() default "Çmimi duhet të jetë më i madh se zero!";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
