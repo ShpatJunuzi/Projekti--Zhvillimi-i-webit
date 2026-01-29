@@ -25,4 +25,8 @@ public class CategoryService {
     public void deleteById(Long id) {
         repo.deleteById(id);
     }
+
+    public Category findById(Long categoryId) {
+        return null;
+    }
 }

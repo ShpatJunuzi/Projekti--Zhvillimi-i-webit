@@ -7,6 +7,6 @@ public class PositivePriceValidator implements ConstraintValidator<PositivePrice
     @Override
     public boolean isValid(Double value, ConstraintValidatorContext context) {
         if (value == null) return false;
-        return value > 0; // Kthehet true nëse çmimi është pozitiv
+        return value > 0;
     }
 }

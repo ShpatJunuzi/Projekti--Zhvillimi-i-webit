@@ -15,29 +15,9 @@ public class ProductService {
         this.repo = repo;
     }
 
-    public void deleteById(Long id) {
-        repo.deleteById(id);
-    }
-
 
     public List<Product> search(String searchText, Long categoryId) {
-        
-        if ((searchText == null || searchText.isBlank()) && categoryId == null) {
-            return repo.findAll();
-        }
-
-       
-        if ((searchText == null || searchText.isBlank()) && categoryId != null) {
-            return repo.findByCategoryId(categoryId);
-        }
-
-        
-        if (searchText != null && !searchText.isBlank() && categoryId == null) {
-            return repo.findByNameContainingIgnoreCase(searchText);
-        }
-
-        
-        return repo.findByNameContainingIgnoreCaseAndCategoryId(searchText, categoryId);
+        return repo.searchProducts(searchText, categoryId);
     }
 
     public Product findById(Long id) {
@@ -53,8 +33,10 @@ public class ProductService {
         if (product != null) {
             product.setName(updatedProduct.getName());
             product.setPrice(updatedProduct.getPrice());
-            product.setStock(updatedProduct.getStock());
             product.setCategory(updatedProduct.getCategory());
+            if (updatedProduct.getImage() != null) {
+                product.setImage(updatedProduct.getImage());
+            }
             repo.save(product);
         }
     }
@@ -63,7 +45,8 @@ public class ProductService {
         repo.deleteById(id);
     }
 
-    public Object findAll(String searchText) {
-        return search(searchText, null);
+
+    public List<Product> findAll() {
+        return repo.findAll();
     }
 }

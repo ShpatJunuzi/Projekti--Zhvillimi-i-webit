@@ -1,53 +1,82 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{shared/layout}">
 <head>
-    <title>Edito Produktin</title>
+    <meta charset="UTF-8">
+    <title>Edit Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
 <div layout:fragment="content">
-    <h2>Ndrysho të dhënat e produktit</h2>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-warning text-dark py-3">
+                        <h3 class="mb-0 text-center fw-bold">Edit Product Details</h3>
+                    </div>
+                    <div class="card-body p-4">
 
-    <form th:action="@{/admin/products/edit/{id}(id=${product.id})}" th:object="${product}" method="post">
+                        <form th:action="@{/app/products/edit/{id}(id=${product.id})}"
+                              th:object="${product}"
+                              method="post"
+                              enctype="multipart/form-data">
 
-        <input type="hidden" th:field="*{id}" />
+                            <input type="hidden" th:field="*{id}" />
+                            <input type="hidden" th:field="*{image}" />
 
-        <div class="mb-3">
-            <label>Emri i produktit:</label>
-            <input type="text" th:field="*{name}" class="form-control" />
-            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></p>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Product Name</label>
+                                <input type="text" th:field="*{name}" class="form-control" />
+                                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger small mt-1"></p>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Price (€)</label>
+                                <input type="number" step="0.01" th:field="*{price}" class="form-control" />
+                                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger small mt-1"></p>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Stock Quantity</label>
+                                <input type="number" th:field="*{stock}" class="form-control" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Category</label>
+                                <select th:field="*{category.id}" class="form-select">
+                                    <option value="">Select Category</option>
+                                    <option th:each="c : ${categories}"
+                                            th:value="${c.id}"
+                                            th:text="${c.name}">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Update Image (Optional)</label>
+                                <input type="file" name="imageFile" class="form-control" accept="image/*">
+                                <div class="form-text mt-1 text-truncate">
+                                    Current: <span th:text="*{image != null ? image : 'No image'}"></span>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                                <a th:href="@{/app/products}" class="btn btn-outline-secondary px-4">Back to List</a>
+                                <button type="submit" class="btn btn-warning px-5 shadow-sm fw-bold">Save Changes</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="mb-3">
-            <label>Çmimi (€):</label>
-            <input type="number" step="0.01" th:field="*{price}" class="form-control" />
-            <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></p>
-        </div>
-
-        <div class="mb-3">
-            <label>Sasia në stok:</label>
-            <input type="number" th:field="*{stock}" class="form-control" />
-        </div>
-
-        <div class="mb-3">
-            <label>Kategoria:</label>
-            <select th:field="*{category}" class="form-select">
-                <option th:each="c : ${categories}"
-                        th:value="${c.id}"
-                        th:text="${c.name}"
-                        th:selected="${product.category != null and c.id == product.category.id}">
-                </option>
-            </select>
-        </div>
-
-        <div class="mt-4">
-            <button type="submit" class="btn btn-primary">Ruaj ndryshimet</button>
-            <a th:href="@{/app/products}" class="btn btn-secondary">Kthehu mbrapa</a>
-        </div>
-
-    </form>
+    </div>
 </div>
 
 </body>
